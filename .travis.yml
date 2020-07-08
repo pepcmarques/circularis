@@ -1,0 +1,17 @@
+language: python
+dist: xenial
+sudo: true
+
+python:
+  - 3.8
+
+env:
+  global:
+    - SITE=circularis
+
+install:
+  - pip install poetry
+  - poetry install
+
+script:
+  - poetry run flake8 .

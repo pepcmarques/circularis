@@ -1,0 +1,1 @@
+web: gunicorn circularis.wsgi --log-file -

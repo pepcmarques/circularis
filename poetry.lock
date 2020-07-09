@@ -214,8 +214,8 @@ python-versions = "*"
 version = "0.2.5"
 
 [metadata]
-content-hash = "455ae4f48e6f6db1f58b8f77d2e531ee3d39df2d754fa6de8020702ff26c67f9"
-python-versions = "^3.8"
+content-hash = "2ef56d7d81f5f60ba795a662efd92fee18c75b1bd040150b580c0d6312a25d4f"
+python-versions = "3.8.1"
 
 [metadata.files]
 asgiref = [

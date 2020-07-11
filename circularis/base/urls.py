@@ -19,5 +19,5 @@ from circularis.base import views
 app_name = 'base'
 
 urlpatterns = [
-    path('', views.index, name="index"),
+    path('', views.index, name="home"),
 ]

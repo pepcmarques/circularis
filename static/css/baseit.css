@@ -1,3 +1,20 @@
+body {
+  padding-top: 60px;
+}
+@media (max-width: 979px) {
+  body {
+    padding-top: 0px;
+  }
+}
+
+.section {
+   padding-top: 70px;"
+}
+
+.messages-container {
+   padding-top: 70px;"
+}
+
 @font-face {
   font-family: 'Playball';
   font-style: normal;
@@ -108,3 +125,54 @@ header .navbar .username-divider {
   .block-2.teal,
   .block-2.teal .wrap-icon {
     background-color: #16c3b0; }
+
+#home-splash{
+  width: auto;
+  height: 1005;
+  min-height: 600px;
+  margin-top: -22px;
+  margin-left: -15px;
+  margin-right: -15px;
+  padding: 12px 15px 1rem;
+  background-color: hsl(40, 15%, 25%);
+  background-image: url('/static/img/red-background-book-original.jpg');
+  background-size: cover;
+  background-position: bottom center;
+  color: rgba(255, 255, 255, .8);
+}
+#home-splash h1{
+  font-size: 3rem;
+  font-size: 7vw;
+  color: rgba(255, 255, 255, .8);
+  opacity: 1;
+  font-weight: 700;
+  text-shadow: 4px 4px 15px rgba(0, 0, 0, .4);
+}
+#home-splash #big-buttons .btn{
+  color: white;
+  border-color: white;
+}
+#home-splash #fb-likes {
+  color: white;
+  text-align: center;
+  background-color: rgba(0, 0, 0, .3);
+  padding: 13px 10px;
+  border-radius: 6px;
+  min-height: 89px;
+  width: 260px;
+  margin: 0 auto;
+}
+#home-lede{
+  font-size: 1.3rem;
+  line-height: 1.5;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (max-width: 768px) {
+  #home-splash h1 {
+    font-size: 2rem;
+  }
+  #home-lede{
+    font-size: 1.2rem;
+  }
+}

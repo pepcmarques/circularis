@@ -1,0 +1,25 @@
+{% extends 'base.html'%}
+
+{% load static from static %}
+
+{% block content %}
+    {% if welcome %}
+        <div style="border: 5px outset red; background-color: lightyellow; text-align: center;">
+            <p><h2>Welcome to {{ system_name }}!</h2></p>
+            <p><h4>Thank you for believing that books must {{ system_name }}</h4></p>
+            <p><h4>This message was shown because you do not have any address associate to your account.</h4></p>
+            <p><h4>For a better experience click on the link that represents a house, and add an address for you. You can also do it later, however you will not be allowed to add or borrow any book before adding an address.</h4></p>
+            <p><h4>We also encourage you to fill your name clicking on the icon that represents a human. As before, you can add it later.</h4></p>
+            <p><h4>If you decide to do it later, click on the gear on the menu, and click on the "Profile" option.</h4></p>
+        </div>
+    {% endif %}
+    <h1>Profile</h1>
+      <div class="row">
+        <div class="col">
+            <center><a href="{% url 'accounts:update_user' %}"><img src="{% static 'img/icon_personal.png' %}"></a></center>
+        </div>
+        <div class="col">
+            <center><a href="{% url 'base:update_address' %}"><img src="{% static 'img/icon_address.png' %}"></a></center>
+        </div>
+      </div>
+{% endblock content %}

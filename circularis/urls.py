@@ -19,4 +19,7 @@ from django.urls import path, include
 urlpatterns = [
     path('', include('circularis.base.urls')),
     path('admin/', admin.site.urls),
+
+    path('accounts/', include('circularis.accounts.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

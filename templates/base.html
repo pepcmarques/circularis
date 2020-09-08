@@ -24,13 +24,21 @@
 
 <body>
   {% block body %}
-  <div class="wrapper">
 
     {% include 'includes/header.html' %}
 
     {% if not user.is_authenticated %}
         {% block imgheader %}
-            <img class="img-header img-fluid mx-auto d-block" src="{% static 'img/red-background-book.png' %}" />
+          <div id="home-splash">
+            <div class="container">
+            <h1 class="text-center" style="padding-top: 140px;">Let it Circularis</h1>
+            <div class="row justify-content-center">
+              <div class="col col-md-2" style="center">First column First column First column First column First column First column First column First column </div>
+              <div class="col col-md-2" style="center">Second column Second column Second column Second column Second column Second column Second column Second column </div>
+              <div class="col col-md-2" style="center">Third column Third column Third column Third column Third column Third column Third column Third column</div>
+            </div>
+              </div>
+          </div>
         {% endblock imgheader %}
     {% endif %}
 
@@ -50,7 +58,7 @@
     {% endblock %}
 
     <div class="push"></div>
-  </div>
+
 
   {% include 'includes/footer.html' %}
 
@@ -72,6 +80,7 @@
       <div class="bounce3"></div>
     </div>
   </div>
+  <script src="{% static 'js/jquery.min.js' %}"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
   {% block javascript %}
   {% endblock %}

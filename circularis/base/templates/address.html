@@ -1,0 +1,12 @@
+{% extends 'base.html'%}
+
+{% load static from static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1>Update Address</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {% crispy form %}
+    </form>
+{% endblock content %}

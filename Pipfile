@@ -7,6 +7,7 @@ verify_ssl = true
 flake8 = "*"
 pytest = "*"
 pytest-django = "*"
+model-bakery = "*"
 
 [packages]
 django = "*"
@@ -16,6 +17,7 @@ dj-database-url = "*"
 psycopg2-binary = "*"
 whitenoise = "*"
 django-crispy-forms = "*"
+mapbox = "*"
 
 [requires]
 python_version = "3.8"

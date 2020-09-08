@@ -14,10 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from django.views.generic import TemplateView
+
 from circularis.base import views
 
 app_name = 'base'
 
 urlpatterns = [
-    path('', views.index, name="home"),
+    path('', views.index, name="index"),
+    path('home/', views.home, name="home"),
+
+    path('foo/', TemplateView.as_view(template_name='config_home.html'), name="config_home"),
+    path('address/', views.update_address, name="update_address"),
+    path('maps/', views.default_map, name="maps"),
 ]

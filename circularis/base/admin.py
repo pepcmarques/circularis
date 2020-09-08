@@ -1,3 +1,6 @@
-from django.contrib import admin  # noqa
+from django.contrib import admin
+from circularis.base.models import Address, Province, BookStatus
 
-# Register your models here.
+admin.site.register(Address)
+admin.site.register(Province)
+admin.site.register(BookStatus)

@@ -1,20 +1,20 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div class="container">
-      <a href="{% url 'base:home' %}" class="navbar-brand value-brand">Circularis</a>
+      <a href="{% url 'base:index' %}" class="navbar-brand value-brand">Circularis</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                  <a class="nav-link" href="{% url 'base:home' %}">Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="{% url 'base:index' %}">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="{% url 'base:home' %}">About</a>
+                  <a class="nav-link" href="{% url 'base:index' %}">About</a>
               </li>
             <li class="nav-item">
-                  <a class="nav-link" href="{% url 'base:home' %}">Contact</a>
+                  <a class="nav-link" href="{% url 'base:index' %}">Contact</a>
             </li>
           </ul>
           {% if user.is_authenticated %}
@@ -36,24 +36,32 @@
             <li>
               <span class="navbar-text username-divider"></span>
             </li>
-            <li>
-              <a href="{% url 'profile' user.id %}">
-                <span data-toggle="tooltip" data-placement="bottom" data-container="body" title="Account profile">
-                  <span class="icon"><i class="fa fa-cog"></i></span>
-                </span>
-              </a>
+                <li class="nav-item dropdown">
+                     <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         <span data-toggle="tooltip" data-placement="bottom" data-container="body" title="Setup"><i class="fa fa-cog"></i></span>
+                     </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'base:config_home' %}">
+                        Profile
+                    </a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
             </li>
+            <span class="navbar-text username-divider"></span>
             <li>
               <a href="{% url 'logout' %}">
                 <span data-toggle="tooltip" data-placement="bottom" data-container="body" title="Sign out">
-                  <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+                  <span class="navbar-text"><i class="fas fa-sign-out-alt"></i></span>
                 </span>
               </a>
             </li>
           </ul>
         {% else %}
-          <a href="{% url 'base:home' %}" title="Sign in" class="btn btn-outline-success navbar-btn navbar-right">Sign in</a>
-          <a href="{% url 'base:home' %}" title="Sign up" class="btn btn-outline-primary navbar-btn navbar-right" style="margin-right: 5px;">Sign up</a>
+          <span class="navbar-text"><a href="{% url 'accounts:login' %}" class="nav-link">Sign in</a></span>
+          <span class="navbar-text username-divider"></span>
+          <span class="navbar-text"><a href="{% url 'accounts:signup' %}" class="nav-link" style="margin-right: 5px;">Sign up</a></span>
         {% endif %}
       </div>
     </div>

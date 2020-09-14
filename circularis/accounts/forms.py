@@ -80,9 +80,10 @@ class UsersForm(forms.ModelForm):
 class UsersUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'first_name']
+        fields = ['email', 'first_name', 'nickname']
         labels = {
             'first_name': 'First name',
+            'nickname': 'Nickname',
         }
 
     def __init__(self, *args, **kwargs):

@@ -23,14 +23,20 @@
               <span class="navbar-text username-divider"></span>
             </li>
 
-            {% if  request.user.first_name or request.user.first_name.strip %}
+            {% if request.user.nickname or request.user.nickname.strip %}
                 <li>
-                  <span class="navbar-text">Hi {{ request.user.first_name }}</span>
+                  <span class="navbar-text">Hi {{ request.user.nickname }}</span>
                 </li>
             {% else %}
-                <li>
-                  <span class="navbar-text">Hi {{ request.user.email }}</span>
-                </li>
+                {% if request.user.first_name or request.user.first_name.strip %}
+                    <li>
+                      <span class="navbar-text">Hi {{ request.user.first_name }}</span>
+                    </li>
+                {% else %}
+                    <li>
+                      <span class="navbar-text">Hi {{ request.user.email }}</span>
+                    </li>
+                {% endif %}
             {% endif %}
 
             <li>

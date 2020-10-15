@@ -1,5 +1,6 @@
+from crispy_forms.bootstrap import PrependedText
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Row, Column, Submit
+from crispy_forms.layout import Layout, Row, Column, Submit, Field
 from django.forms import ModelForm
 
 from circularis.base.common import get_latitude_longitude
@@ -17,13 +18,16 @@ class CreateAddress(ModelForm):
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Row(
-                Column('street', css_class='form-group col-md-8 mb-0'),
-                Column('unit', css_class='form-group col-md-4 mb-0'),
+                Column(PrependedText('street', "", placeholder="eg.: 123 Main St"),
+                       css_class='form-group col-md-8 mb-0'),
+                Column(PrependedText('unit', "", placeholder="eg.: 202 (or leave it blank if it is a house)"),
+                       css_class='form-group col-md-4 mb-0'),
             ),
             Row(
-                Column('city', css_class='form-group col-md-6 mb-0'),
+                Column(PrependedText('city', "", placeholder="eg.: Vancouver"), css_class='form-group col-md-6 mb-0'),
                 Column('province', css_class='form-group col-md-4 mb-0'),
-                Column('postal_code', css_class='form-group col-md-2 mb-0'),
+                Column(PrependedText('postal_code', "", placeholder="eg.: V1T 1TV"),
+                       css_class='form-group col-md-2 mb-0'),
             ),
             Submit('submit', 'Submit')
         )

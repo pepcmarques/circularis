@@ -57,6 +57,7 @@ INSTALLED_APPS = [
 
     'circularis.base',
     'circularis.accounts',
+    'circularis.books',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

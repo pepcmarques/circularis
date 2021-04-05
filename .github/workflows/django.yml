@@ -44,8 +44,6 @@ jobs:
         pipenv sync -d
     - name: Create Config
       run: cp contrib/env-sample .env
-    - name: Create Database
-      run: psql -c "CREATE DATABASE testdb;" -U postgres
     - name: Run migrations
       run: python manage.py migrate
     - uses: harmon758/postgresql-action@v1

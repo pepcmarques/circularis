@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from circularis.base.forms import CreateAddress
 from circularis.base.models import Address
+from circularis.books.models import Book
 
 
 def index(request):
@@ -15,7 +16,9 @@ def index(request):
 def home(request):
     if not Address.objects.has_address(request.user):
         return render(request, 'config_home.html', {'system_name': settings.SYSTEM_NAME, 'welcome': True})
-    return render(request, 'home.html', {'user': request.user, })
+    # if len(Book.objects.get_books_by_user(request.user)) == 0:
+    #    return redirect('books:my_books')
+    return redirect('books:all_books')
 
 
 @login_required()

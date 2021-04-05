@@ -50,9 +50,9 @@
                     <a class="dropdown-item" href="{% url 'base:config_home' %}">
                         Profile
                     </a>
-                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="{% url 'books:my_books' %}">My books</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" href="{% url 'books:all_books' %}">Catalog</a>
                 </div>
             </li>
             <span class="navbar-text username-divider"></span>

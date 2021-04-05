@@ -4,9 +4,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <h1>Address</h1>
-    <form method="POST">
+    <h1>Book</h1>
         {% csrf_token %}
         {% crispy form %}
-    </form>
 {% endblock content %}

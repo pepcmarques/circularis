@@ -70,48 +70,6 @@ class Province(models.Model):
         verbose_name_plural = 'provinces'
 
 
-class BookStatusManager(models.Manager):
-
-    def populate(self, recreate=False):
-        book_status = [('AV', 'Available'),
-                       ('CO', 'Checked out')]
-
-        if recreate:
-            print("deleting data")
-            self.delete()
-        else:
-            if self.all():
-                print(f"There is data in {self.model.__name__}. Nothing to do.")
-                return False
-
-        for b_status in book_status:
-            code, status = b_status
-            self.create(code=code, status=status)
-            print(f"Populating {self.model.__name__} model with: {code}, {status}")
-
-        return True
-
-
-class BookStatus(models.Model):
-
-    class BookStatusChoices(models.TextChoices):
-
-        AV = 'AV', _('Available')
-        BO = 'CO', _('Checked out')
-
-    code = models.CharField(max_length=2, choices=BookStatusChoices.choices, default=BookStatusChoices.AV)
-    status = models.CharField(max_length=25)
-
-    objects = BookStatusManager()
-
-    def __str__(self):
-        return self.status
-
-    class Meta:
-        ordering = ['status']
-        verbose_name_plural = 'bookstatus'
-
-
 class AddressManager(models.Manager):
 
     def has_address(self, user):

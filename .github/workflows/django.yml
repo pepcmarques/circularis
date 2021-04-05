@@ -29,9 +29,9 @@ jobs:
         python -m pip install pipenv
         pipenv sync -d
     - name: Create Config
-        cp contrib/env-sample .env
+      run: cp contrib/env-sample .env
     - name: Create Database
-        psql -c "CREATE DATABASE testdb;" -U postgres
+      run: psql -c "CREATE DATABASE testdb;" -U postgres
     - name: Run Tests
       run: |
           pipenv run flake8 .

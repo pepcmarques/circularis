@@ -2,11 +2,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.views.generic import ListView
 
 from circularis.books.forms import CreateBook, SearchIsbnForm
 from circularis.books.models import Book
-from circularis.books.services import search_for_book, pre_populate_book_form
 
 
 def image(request):
@@ -68,7 +66,7 @@ def add_by_isbn(request):
         if form.is_valid():
             # process the data in form.cleaned_data as required
             #
-            book = search_for_book(request.data.cleaned_data['isbn'])
+            # book = search_for_book(request.data.cleaned_data['isbn'])
             #
             # redirect to a new URL:
             return redirect(reverse('books:add_book'))  # how to pass data ????

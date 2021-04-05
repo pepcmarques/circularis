@@ -7,14 +7,12 @@ from django.forms import ModelForm
 from django import forms
 
 from circularis.books.models import Book
-from circularis.books.services import clean_isbn, is_possible_isbn, validate_isbn
+from circularis.books.services import clean_isbn, validate_isbn
 
 
 class CreateBook(ModelForm):
     class Meta:
         model = Book
-        # fields = ['title', 'subtitle', 'author_1', 'author_2', 'author_3', 'publisher', 'publishedDate', 'description',
-        #           'isbn_10', 'isbn_13', 'pages', 'category', 'address', 'status', 'user']
         fields = ['title', 'author_1', 'category', 'address', 'status', 'user']
         labels = {
             'author_1': 'Author',

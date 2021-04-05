@@ -5,7 +5,6 @@ from django.urls import reverse
 
 from circularis.base.forms import CreateAddress
 from circularis.base.models import Address
-from circularis.books.models import Book
 
 
 def index(request):

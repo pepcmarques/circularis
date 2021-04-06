@@ -9,6 +9,7 @@
       <table class="table table-hover">
           <thead>
             <tr>
+              <th scope="col">Thumbnail</th>
               <th scope="col">Title</th>
               <th scope="col">Author</th>
               <th scope="col">User</th>
@@ -18,6 +19,9 @@
             {% for book in page_obj %}
             <tr>
                 {# Each "book" is a Book model object. #}
+                <td>
+                    <img src="{{ book.thumbnail }}" alt="">
+                </td>
                 <td>
                     {{ book.title|upper }}
                 </td>

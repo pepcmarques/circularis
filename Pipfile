@@ -18,6 +18,7 @@ psycopg2-binary = "*"
 whitenoise = "*"
 django-crispy-forms = "*"
 mapbox = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.8"

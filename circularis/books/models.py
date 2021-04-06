@@ -242,7 +242,7 @@ class Book(models.Model):
     # pages = models.IntegerField(blank=True, null=True)
     category = models.ForeignKey(BookCategory, blank=False, on_delete=models.DO_NOTHING)
     #
-    thumbnail = models.BinaryField(blank=True)
+    thumbnail = models.ImageField(upload_to='thumbnails')
     #
     address = models.ForeignKey(Address, blank=False, on_delete=models.DO_NOTHING)
     status = models.ForeignKey(BookStatus, to_field='code', blank=False, on_delete=models.DO_NOTHING)

@@ -31,7 +31,7 @@ jobs:
     - name: Create Config
       run: cp contrib/env-sample .env
     - name: Run migrations
-      run: python manage.py migrate
+      run: pipenv run python manage.py migrate
     - name: Run Tests
       run: |
           pipenv run flake8 .

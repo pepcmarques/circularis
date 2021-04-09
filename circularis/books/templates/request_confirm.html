@@ -1,0 +1,12 @@
+{% extends 'base.html'%}
+
+{% load static from static %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <h2>Confirm book request?</h2>
+        <a href="{% url 'books:all_books' %}">Cancel</a>
+        <button type="submit">Confirm</button>
+    </form>
+{% endblock %}

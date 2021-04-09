@@ -1,0 +1,56 @@
+{% extends 'base.html'%}
+
+{% load static from static %}
+
+{% block content %}
+    <h1>My Messages</h1>
+
+    <div class="table-responsive-lg">
+      <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">From</th>
+              <th scope="col">Subject</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for message in page_obj %}
+            <tr>
+                {# Each "message" is a MessageOneOne model object. #}
+                <td>
+                    {{ message.sender.name }}
+                </td>
+                <td>
+                    {{ message.subject }}
+                </td>
+            {% endfor %}
+            </tr>
+          </tbody>
+      </table>
+    </div>
+
+    {% if page_obj %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        </br>
+    {% else %}
+        <h3>No messages!</h3>
+        </br>
+    {% endif %}
+
+{% endblock content %}

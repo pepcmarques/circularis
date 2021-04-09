@@ -1,10 +1,12 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 
-from circularis.books.forms import CreateBook, SearchIsbnForm
-from circularis.books.models import Book
+from circularis.base.models import Address
+from circularis.books.forms import CreateBook, SearchIsbnForm, UpdateBook
+from circularis.books.models import Book, BookStatus
 
 
 def image(request):
@@ -13,30 +15,41 @@ def image(request):
 
 
 @login_required()
-def list_books(request, book_list):
+def list_books(request, book_list, place="all"):
     paginator = Paginator(book_list, 25)  # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'books.html', {'page_obj': page_obj})
+    if place == "all":
+        return render(request, 'books.html', {'page_obj': page_obj})
+    elif place == "my":
+        return render(request, 'my_books.html', {'page_obj': page_obj})
 
 
 @login_required()
-def list_all_books(request):
-    book_list = Book.objects.get_books()
-    return list_books(request, book_list)
+def list_all_not_my_books(request):
+    book_list = Book.objects.get_books_by_not_user(user=request.user)
+    return list_books(request, book_list, "all")
 
 
 @login_required()
 def list_my_books(request):
     book_list = Book.objects.get_books_by_user(user=request.user)
-    return list_books(request, book_list)
+    return list_books(request, book_list, "my")
 
 
 @login_required()
 def add_book(request):
     if request.method == 'POST':
-        form = CreateBook(request.POST)
-        if form.save():
+        form = CreateBook(request.POST, request.FILES)
+        if form.is_valid():
+            new_book = form.save(commit=False)
+            address = Address.objects.get(user=request.user)
+            if address is None:
+                return redirect(reverse('base:update_address'))
+            new_book.user = request.user
+            new_book.address = address
+            new_book.status = BookStatus.objects.get(code=BookStatus.BookStatusChoices.AV)  # This is the default.
+            new_book.save()
             return redirect(reverse('base:home'))
     else:
         form = CreateBook()
@@ -46,13 +59,25 @@ def add_book(request):
 @login_required()
 def update_book(request, pk):
     if request.method == 'POST':
-        form = CreateBook(request.POST)
+        obj = get_object_or_404(Book, id=pk)
+        form = UpdateBook(request.POST or None, request.FILES or None, instance=obj)
         if form.is_valid():
-            if form.save(request.user):
-                return redirect(reverse('base:home'))
+            book = form.save(commit=False)
+            # TODO: Status = checked out
+
+            address = Address.objects.get(user=request.user)
+            if address is None:
+                return redirect(reverse('base:update_address'))
+            book.user = request.user
+            book.address = address
+
+            book.save()
+            return redirect(reverse('books:my_books'))
     else:
-        book_instance = Book.objects.get_books(user=request.user, pk=pk)
-        form = CreateBook(instance=book_instance)
+        book_instance = Book.objects.get(pk=pk)
+        if book_instance.user != request.user:
+            return redirect(reverse('books:my_books'))
+        form = UpdateBook(instance=book_instance)
     return render(request, 'book.html', {'form': form})
 
 
@@ -75,3 +100,17 @@ def add_by_isbn(request):
         form = SearchIsbnForm()
 
     return render(request, 'add_by_isbn.html', {'form': form})
+
+
+def request_book(request, pk):
+    book = Book.objects.get(pk=pk)
+    if request.user == book.user:
+        messages.add_message(request, messages.INFO, "Sorry, but you can't request a book that it is with you")
+        return redirect(reverse('books:all_books'))
+
+    if request.method == 'POST':
+        # TODO: implement !!!
+        messages.add_message(request, messages.INFO, "Request confirmed")
+        return redirect(reverse('books:all_books'))
+
+    return render(request, 'request_confirm.html')

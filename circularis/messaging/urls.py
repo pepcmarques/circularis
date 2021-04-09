@@ -13,15 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+
+from circularis.messaging import views
+
+app_name = 'messaging'
 
 urlpatterns = [
-    path('', include('circularis.base.urls')),
-    path('admin/', admin.site.urls),
-    path('books/', include('circularis.books.urls')),
-    path('messaging/', include('circularis.messaging.urls')),
-
-    path('accounts/', include('circularis.accounts.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
+    # path('all/', views.list_all_messages, name="all_messages"),
+    path('my/', views.list_my_messages, name="my_messages"),
 ]

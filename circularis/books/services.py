@@ -1,3 +1,8 @@
+from io import BytesIO
+
+from PIL import Image
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
 from circularis.base.models import Address
 from circularis.books.models import Book, BookStatus
 
@@ -29,3 +34,28 @@ def pre_populate_book_form(user):
     book.user = user
     book.status = BookStatus.objects.get(code=BookStatus.BookStatusChoices.AV)
     return book
+
+
+def to_thumbnail(image):
+    max_size = (100, 100)
+
+    # Convert from InMemoryUploadedFile to Image (PIL)
+    im_pic = Image.open(image)
+    im_pic.thumbnail(max_size)
+
+    pic_io = BytesIO()
+    im_pic.save(pic_io, im_pic.format)
+
+    image.content_type = f"image/{im_pic.format.lower()}"
+
+    # Convert back
+    pic_file = InMemoryUploadedFile(
+        file=pic_io,
+        field_name=None,
+        name=image.name,
+        content_type=image.content_type,
+        size=image.size,
+        charset=None
+    )
+
+    return pic_file

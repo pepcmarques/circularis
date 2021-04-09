@@ -3,7 +3,7 @@
 {% load static from static %}
 
 {% block content %}
-    <h1>Catalog</h1>
+    <h1>My Books</h1>
 
     <div class="table-responsive-lg">
       <table class="table table-hover">
@@ -12,8 +12,7 @@
               <th scope="col">Cover</th>
               <th scope="col">Title</th>
               <th scope="col">Author</th>
-              <th scope="col" align="center">Status</th>
-              <th scope="col">Actions</th>
+              <th scope="col">Edit</th>
             </tr>
           </thead>
           <tbody>
@@ -30,18 +29,7 @@
                     {{ book.author_1|title }}
                 </td>
                 <td>
-                    {% if book.status|upper == 'AVAILABLE' %}
-                        <i class="fas fa-book" style="color:green"></i>
-                    {% endif %}
-                    {% if book.status|upper == 'REQUESTED' %}
-                        <i class="fas fa-book" style="color:yellow"></i>
-                    {% endif %}
-                    {% if book.status|upper == 'LOCKED' %}
-                        <i class="fas fa-book" style="color:red"></i>
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="{% url 'books:request' pk=book.id %}">Request</a>
+                    <a href="{% url 'books:update_book' pk=book.id %}">Edit</a>
                 </td>
             {% endfor %}
             </tr>

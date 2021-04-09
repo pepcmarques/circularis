@@ -20,8 +20,9 @@ from circularis.books import views
 app_name = 'books'
 
 urlpatterns = [
-    path('all/', views.list_all_books, name="all_books"),
-    path('my/', views.list_my_books, name="my_books"),
     path('', views.add_book, name="add_book"),
+    path('all/', views.list_all_not_my_books, name="all_books"),
+    path('my/', views.list_my_books, name="my_books"),
+    path('request/<int:pk>', views.request_book, name="request"),
     path('<int:pk>', views.update_book, name="update_book"),
 ]

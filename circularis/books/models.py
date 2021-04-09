@@ -1,6 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.db.models import Q
 
 from circularis.base.models import Address
 from circularis.accounts.models import User
@@ -157,12 +158,12 @@ class BookStatusManager(models.Manager):
     def populate(self, recreate=False):
         book_status = [('AV', 'Available'),
                        ('CO', 'Checked out'),
-                       ('UN', 'Unavailable'),
-                       ('RM', 'Removed')]
+                       ('LO', 'Locked'),
+                       ('RM', 'Removed'),
+                       ('RE', 'Requested')]
 
         if recreate:
-            print("deleting data")
-            self.delete()
+            self.all().delete()
         else:
             if self.all():
                 print(f"There is data in {self.model.__name__}. Nothing to do.")
@@ -179,9 +180,10 @@ class BookStatusManager(models.Manager):
 class BookStatus(models.Model):
     class BookStatusChoices(models.TextChoices):
         AV = 'AV', _('Available')
-        RE = 'RE', _('I am reading')
+        CO = 'CO', _('Checked out')
         LO = 'LO', _('Locked')
         RM = 'RM', _('Removed')
+        RE = 'RE', _('Requested')
 
     code = models.CharField(max_length=2, unique=True, choices=BookStatusChoices.choices, default=BookStatusChoices.AV)
     status = models.CharField(max_length=25)
@@ -207,6 +209,12 @@ class BookManager(models.Manager):
     def get_books_by_user(self, user):
         try:
             return self.filter(user=user.id)
+        except ObjectDoesNotExist:
+            return []
+
+    def get_books_by_not_user(self, user):
+        try:
+            return self.filter(~Q(user=user.id))
         except ObjectDoesNotExist:
             return []
 

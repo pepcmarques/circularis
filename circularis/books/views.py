@@ -4,9 +4,13 @@ from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 
+from circularis.base.decorators import require_address
 from circularis.base.models import Address
 from circularis.books.forms import CreateBook, SearchIsbnForm, UpdateBook
 from circularis.books.models import Book, BookStatus
+from circularis.messaging.models import MessageOneOne
+from circularis.messaging.services import process_book_request, process_book_reject_request, process_delete_message, \
+    process_accept_request
 
 
 def image(request):
@@ -102,6 +106,8 @@ def add_by_isbn(request):
     return render(request, 'add_by_isbn.html', {'form': form})
 
 
+@login_required()
+@require_address()
 def request_book(request, pk):
     book = Book.objects.get(pk=pk)
     if request.user == book.user:
@@ -109,8 +115,55 @@ def request_book(request, pk):
         return redirect(reverse('books:all_books'))
 
     if request.method == 'POST':
-        # TODO: implement !!!
-        messages.add_message(request, messages.INFO, "Request confirmed")
+        if process_book_request(request, book):
+            messages.add_message(request, messages.INFO, "Book request message was sent")
+        else:
+            messages.add_message(request, messages.ERROR, "Couldn't process the book request")
         return redirect(reverse('books:all_books'))
 
     return render(request, 'request_confirm.html')
+
+
+@login_required()
+@require_address()
+def reject_request_book(request, pk):
+    message = MessageOneOne.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        if process_book_reject_request(request, message):
+            messages.add_message(request, messages.INFO, "Reject book request message was sent")
+        else:
+            messages.add_message(request, messages.ERROR, "Couldn't process the book reject")
+        return redirect(reverse('messaging:my_messages'))
+
+    return render(request, 'reject_confirm.html')
+
+
+@login_required()
+@require_address()
+def delete_request_book(request, pk):
+    message = MessageOneOne.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        if process_delete_message(request, message):
+            messages.add_message(request, messages.INFO, "Delete book request")
+        else:
+            messages.add_message(request, messages.ERROR, "Couldn't process the book reject")
+        return redirect(reverse('messaging:my_messages'))
+
+    return render(request, 'delete_confirm.html')
+
+
+@login_required()
+@require_address()
+def accept_request_book(request, pk):
+    message = MessageOneOne.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        if process_accept_request(request, message):
+            messages.add_message(request, messages.INFO, "Accept book request message was sent")
+        else:
+            messages.add_message(request, messages.ERROR, "Couldn't process the book request (accept)")
+        return redirect(reverse('messaging:my_messages'))
+
+    return render(request, 'accept_confirm.html')

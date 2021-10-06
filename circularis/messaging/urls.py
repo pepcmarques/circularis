@@ -22,4 +22,6 @@ app_name = 'messaging'
 urlpatterns = [
     # path('all/', views.list_all_messages, name="all_messages"),
     path('my/', views.list_my_messages, name="my_messages"),
+    path('delete/<int:pk>', views.delete_message, name="delete_message"),
+
 ]

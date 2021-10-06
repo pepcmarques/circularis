@@ -31,17 +31,19 @@
                 </td>
                 <td>
                     {% if book.status|upper == 'AVAILABLE' %}
-                        <i class="fas fa-book" style="color:green"></i>
+                        <i class="fas fa-book" style="color:green" title="{{ book.status }}"></i>
                     {% endif %}
                     {% if book.status|upper == 'REQUESTED' %}
-                        <i class="fas fa-book" style="color:yellow"></i>
+                        <i class="fas fa-book" style="color:#CCCC00" title="{{ book.status }}"></i>
                     {% endif %}
                     {% if book.status|upper == 'LOCKED' %}
-                        <i class="fas fa-book" style="color:red"></i>
+                        <i class="fas fa-book" style="color:red" title="{{ book.status }}"></i>
                     {% endif %}
                 </td>
                 <td>
-                    <a href="{% url 'books:request' pk=book.id %}">Request</a>
+                    {% if book.status|upper == 'AVAILABLE' %}
+                        <a href="{% url 'books:request' pk=book.id %}">Request</a>
+                    {% endif %}
                 </td>
             {% endfor %}
             </tr>

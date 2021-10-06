@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+
+{% load static from static %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <h2>Accept request?</h2>
+        </br>
+        <p style="color:red"><b>Note:</b></p>
+        <p style="color:black">Your e-mail address will be visible by the requester. So, the requester will email you for scheduling the book pick-up.</br>
+        Also, the book will be automatically checked out. In other words, its ownership will be transferred to the requester.</p>
+        </br>
+        <a href="{% url 'books:all_books' %}">Cancel</a>
+        <button type="submit">Confirm</button>
+    </form>
+{% endblock %}

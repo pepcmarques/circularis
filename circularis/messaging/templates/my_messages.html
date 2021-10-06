@@ -9,8 +9,9 @@
       <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">From</th>
-              <th scope="col">Subject</th>
+                <th scope="col">From</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -18,11 +19,36 @@
             <tr>
                 {# Each "message" is a MessageOneOne model object. #}
                 <td>
-                    {{ message.sender.name }}
+                    {{ message.sender.first_name }}
+                    {% if message.msg_type.status == 'Accept' %}
+                        - {{ message.sender.email }}
+                    {% endif %}
                 </td>
-                <td>
-                    {{ message.subject }}
+                <td title="{{ message.book.title }}">
+                    {% if message.msg_type.status == 'Accept' %}
+                        <span title="Your request was accepted, send an email to schedule your book pick up">
+                    {% else %}
+                        <span>
+                    {% endif %}
+                            {{ message.subject }}
+                        </span>
                 </td>
+                {% if message.msg_type.status == 'Request' %}
+                    <td>
+                        <a href="{% url 'books:accept_request' message.id %}" title="Accept"><i class="fa fa-check" style="color:green"></i></a>
+                        <a href="{% url 'books:reject_request' message.id %}" title="Reject"><i class="fa fa-times" style="color:red"></i></a>
+                    </td>
+                {% endif %}
+                {% if message.msg_type.status == 'Reject' %}
+                    <td>
+                        <a href="{% url 'books:delete_request' message.id %}" title="Delete"><i class="fa fa-times" style="color:red"></i></a>
+                    </td>
+                {% endif %}
+                {% if message.msg_type.status == 'Accept' %}
+                    <td>
+                        <a href="{% url 'messaging:delete_message' message.id %}" title="Delete message"><i class="fa fa-times" style="color:red"></i></a>
+                    </td>
+                {% endif %}
             {% endfor %}
             </tr>
           </tbody>

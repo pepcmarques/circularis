@@ -264,5 +264,11 @@ class Book(models.Model):
     def to_str(self):
         return f"{self.title}"
 
+    def put_in_hold(self):
+        self.status = BookStatus.objects.get(code=BookStatus.BookStatusChoices.RE)
+
+    def remove_hold(self):
+        self.status = BookStatus.objects.get(code=BookStatus.BookStatusChoices.AV)
+
     class Meta:
         ordering = ['title']

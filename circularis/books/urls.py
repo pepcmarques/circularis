@@ -24,5 +24,8 @@ urlpatterns = [
     path('all/', views.list_all_not_my_books, name="all_books"),
     path('my/', views.list_my_books, name="my_books"),
     path('request/<int:pk>', views.request_book, name="request"),
+    path('request/reject/<int:pk>', views.reject_request_book, name="reject_request"),
+    path('request/delete/<int:pk>', views.delete_request_book, name="delete_request"),
+    path('request/accept/<int:pk>', views.accept_request_book, name="accept_request"),
     path('<int:pk>', views.update_book, name="update_book"),
 ]
